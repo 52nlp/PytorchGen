@@ -74,7 +74,7 @@ data_set = "fraud"
 data_dic = {"fraud": "creditcard_1_train_no_label.csv"}
 
 
-def gen_fake_data(n=20000):
+def gen_fake_data_wgan(n=20000):
     # this function will generate n samples
     print("generating data...")
     device = torch.device('cpu')
@@ -100,6 +100,7 @@ def gen_fake_data(n=20000):
     print(df.head())
     df.to_csv(f"fake_data/{data_set}/{name}.csv", index=False)
     print("Output file:", f"fake_data/{data_set}/{name}.csv")
+    return f"fake_data/{data_set}/{name}.csv"
 
 
-#gen_fake_data(30000)
+#gen_fake_data_wgan(30000)

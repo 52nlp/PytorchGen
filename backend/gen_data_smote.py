@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-__author__ = "Yu-Hsuan Chen(Albert)"
+__author__ = "Yu-Hsuan Chen (Albert)"
 import datetime
 import csv
 import random
@@ -62,7 +62,7 @@ def gen_fake_data_smote(n=30000, N=100, k=5):
     name = f"smote_{now.strftime('%Y-%m-%d')}_{N}_{k}_{str(n)}"
     df_fake_data_combine.to_csv(f"fake_data/{data_set}/{name}.csv", index=False)
     print("Output file:", f"fake_data/{data_set}/{name}.csv")
-    return df_fake_data_combine
+    return f"fake_data/{data_set}/{name}.csv"
 
 
 #gen_fake_data = gen_fake_data_smote()

@@ -64,13 +64,16 @@ class Net(torch.nn.Module):
         return output
 
 
-def train_classifier(augment_file="./fake_data/fraud/wgan_2019-09-08_30000.csv", n_samples=20000, num_epochs=2):
+def train_classifier(augment_file="./fake_data/fraud/wgan_2019-09-08_30000.csv", n_samples=20000, num_epochs=5):
     print("augment_file:", augment_file)
-    print("n_samples:", n_samples)
+    print("default_n_samples:", n_samples)
     # read files
     df_orig = pd.read_pickle(data_dic['fraud_orig'])
     df_fake = pd.read_csv(augment_file)
     # to use the number of samples you want
+    n_samples = min(df_fake.shape[0], n_samples)
+    print ("fake data shape:", df_fake.shape[0])
+    print ('n_samples:',n_samples)
     df_fake = df_fake.sample(n=n_samples, random_state=12)
 
     y = df_orig['Class']
@@ -112,7 +115,7 @@ def train_classifier(augment_file="./fake_data/fraud/wgan_2019-09-08_30000.csv",
 
     epochs = num_epochs
     errors = []
-    vis = Visualizations()
+    #vis = Visualizations()
     for epoch in range(epochs):
         print('Epoch {}/{}'.format(epoch, epochs - 1))
         print('-' * 10)
@@ -142,14 +145,14 @@ def train_classifier(augment_file="./fake_data/fraud/wgan_2019-09-08_30000.csv",
 
                     if step % 10 == 0:
                         # print(phase)
-                        vis.plot_loss(np.mean(errors), step)
+                        #vis.plot_loss(np.mean(errors), step)
                         errors.clear()
                 elif phase == 'val':
                     pass
                 running_loss += loss.item()
 
                 preds = (y_pred > 0.5)
-                running_corrects += torch.sum(preds.byte() == output.byte()).item()
+                running_corrects += torch.sum(preds == output.byte()).item()
 
             epoch_loss = running_loss / dataset_sizes[phase]
             epoch_acc = running_corrects / dataset_sizes[phase]
