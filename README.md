@@ -7,3 +7,4 @@
 Python  3.7
 Pytorch 1.2
 ```
+[ZetaGAN](https://devpost.com/software/zetagan-data-generation-service)
